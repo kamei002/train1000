@@ -1,0 +1,8 @@
+!.gitkeep
+__pycache__
+_Dockerfile
+*.h5
+._*
+.DS_Store
+
+logs
