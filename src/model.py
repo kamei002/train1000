@@ -1,7 +1,9 @@
 from keras.models import Sequential
 from keras.layers.convolutional import Conv2D
+from keras.layers.normalization import BatchNormalization
 from keras.layers.pooling import MaxPool2D
 from keras.optimizers import Adam
+from keras.layers import BatchNormalization
 
 from keras.layers.core import Dense, Activation, Dropout, Flatten
 from keras.utils import plot_model
@@ -23,7 +25,7 @@ class Model():
     num_classes = 10
 
 
-
+    # def __init__():
 
     def extract1000(self,X, y, num_classes):
         """https://github.com/mastnk/train1000 を参考にクラスごとに均等に先頭から取得する処理。"""
@@ -80,6 +82,9 @@ class Model():
                 yield x,y
 
     def build_model(self,num_classes):
+
+
+
         model = Sequential()
         model.add(
             Conv2D(32,(3,3)
@@ -88,6 +93,7 @@ class Model():
                 ,input_shape=self.input_shape
             )
         )
+        model.add(BatchNormalization())
         model.add(
             Conv2D(32,(3,3)
                 ,padding='same'
@@ -95,7 +101,7 @@ class Model():
             )
         )
         model.add(MaxPool2D(pool_size=(2, 2)))
-        model.add(Dropout(0.25))
+        # model.add(Dropout(0.25))
 
         model.add(
             Conv2D(64,(3,3)
@@ -163,10 +169,10 @@ class Model():
         )
 
         callbacks=[
-            es_cb
+            rl_cb
             # tb_cb
             # ,cp_cb
-            ,rl_cb
+            ,es_cb
         ]
 
         gen = self.build_generator( x_train, y_train )
